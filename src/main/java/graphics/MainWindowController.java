@@ -2,6 +2,7 @@ package graphics;
 
 import core.FileBindings;
 import core.Helper;
+import enums.ColorType;
 import enums.SamplingType;
 import enums.TransformType;
 import javafx.beans.property.Property;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jpeg.Process;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -22,6 +24,7 @@ import java.text.NumberFormat;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,6 +43,8 @@ public class MainWindowController implements Initializable {
         textfield_encode.setTextFormatter(new TextFormatter<>(Helper.NUMBER_FORMATTER));
 
         textfield_encode.textProperty().bindBidirectional(slider.valueProperty(), NumberFormat.getIntegerInstance());
+
+        Process = new Process(FileBindings.defaultImage);
     }
 
     public void close() {
@@ -52,6 +57,7 @@ public class MainWindowController implements Initializable {
     }
 
     public void changeImage() {
+
     }
 
     public void reset() {
@@ -66,6 +72,8 @@ public class MainWindowController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+
 
     @FXML
     private ComboBox<SamplingType> combobox_sampling;
@@ -119,6 +127,9 @@ public class MainWindowController implements Initializable {
     private Button button_moy;
 
     @FXML
+    private Button button_modgreen;
+
+    @FXML
     private Button button_oversample;
 
     @FXML
@@ -132,6 +143,9 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private Button button_transform;
+
+    @FXML
+    private Button button_rgb;
 
     @FXML
     private Button button_y;
@@ -149,43 +163,97 @@ public class MainWindowController implements Initializable {
     private Slider slider;
 
     @FXML
-    void acctionmodblue(ActionEvent event) {
+    private Button button_orred;
+
+    @FXML
+    private Button button_orgreen;
+
+    @FXML
+    private Button button_blue;
+
+    private Process Process;
+
+
+    @FXML
+    void showimages(ActionEvent event) throws IOException {
+        File file = new File(FileBindings.defaultImage);
+        Dialogs.showImageInWindow(ImageIO.read(file), "Original, true");
 
     }
 
     @FXML
-    void acctionmodred(ActionEvent event) {
-
+    void orred(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromRGB(Process.getOriginalRed(), ColorType.RED, button_shadesofgray.isSelected()), "Original Only Red Image");
     }
 
     @FXML
-    void actionmodcb(ActionEvent event) {
-
+    void orgreen(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromRGB(Process.getOriginalRed(), ColorType.GREEN, button_shadesofgray.isSelected()), "Original Only Green Image");
     }
 
     @FXML
-    void actionmodcr(ActionEvent event) {
-
+    void orblue(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromRGB(Process.getOriginalRed(), ColorType.BLUE, button_shadesofgray.isSelected()), "Original Only Blue Image");
     }
 
     @FXML
-    void actionmody(ActionEvent event) {
-
-    }
-
-    @FXML
-    void actionrbg(ActionEvent event) {
-
-    }
-
-    @FXML
-    void actionycvcr(ActionEvent event) {
-
+    void yaction(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromYCbCr(Process.getOriginalY()), "Original Y Image");
     }
 
     @FXML
     void cbaction(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromYCbCr(Process.getOriginalCb()), "Original Cb Image");
+    }
 
+    @FXML
+    void craction(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromYCbCr(Process.getOriginalCr()), "Original Cr Image");
+    }
+
+    @FXML
+    public void actionrbg(ActionEvent event) {
+        Process.convertRGBToYCbCr();
+    }
+
+    @FXML
+    void actionycvcr(ActionEvent event) {
+        Process.convertYCbCrToRGB();
+    }
+
+    @FXML
+    void actionrgb(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getImageFromModifiedRGB(),"RGB",false);
+    }
+
+    @FXML
+    void acctionmodred(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromRGB(Process.getModifiedRed(), ColorType.RED, button_shadesofgray.isSelected()), "Modified Red Image");
+    }
+
+    @FXML
+    void acctionmodblue(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromRGB(Process.getModifiedBlue(), ColorType.BLUE, button_shadesofgray.isSelected()), "Modified Blue Image");
+    }
+
+    @FXML
+    void actionmodgreen(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromRGB(Process.getModifiedGreen(), ColorType.GREEN, button_shadesofgray.isSelected()), "Modified Green Image");
+    }
+
+    @FXML
+    void actionmodcb(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromYCbCr(Process.getModifiedCb()), "Modified Cb Image");
+    }
+
+    @FXML
+    void actionmodcr(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromYCbCr(Process.getModifiedCr()), "Modified Cr Image");
+    }
+
+    @FXML
+    void actionmody(ActionEvent event) {
+        Dialogs.showImageInWindow(Process.getOneColorImageFromYCbCr(Process.getModifiedY()), "Modified Y Image");
     }
 
     @FXML
@@ -195,11 +263,6 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void count(ActionEvent event) {
-
-    }
-
-    @FXML
-    void craction(ActionEvent event) {
 
     }
 
@@ -238,12 +301,6 @@ public class MainWindowController implements Initializable {
 
     }
 
-    @FXML
-    void showimages(ActionEvent event) throws IOException {
-        File file = new File(FileBindings.defaultImage);
-        Dialogs.showImageInWindow(ImageIO.read(file), "Original, true");
-
-    }
 
     @FXML
     void showsteps(ActionEvent event) {
@@ -255,10 +312,6 @@ public class MainWindowController implements Initializable {
 
     }
 
-    @FXML
-    void yaction(ActionEvent event) {
-
-    }
 
     @FXML
     void fieldencode(ActionEvent event) {
