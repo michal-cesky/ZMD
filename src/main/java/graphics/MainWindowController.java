@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         combobox_sampling.getItems().addAll(SamplingType.values());
@@ -178,7 +177,6 @@ public class MainWindowController implements Initializable {
     void showimages(ActionEvent event) throws IOException {
         File file = new File(FileBindings.defaultImage);
         Dialogs.showImageInWindow(ImageIO.read(file), "Original, true");
-
     }
 
     @FXML
@@ -227,6 +225,18 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
+    void downsample(ActionEvent event) {
+        Process.setModifiedCb(jpeg.Sampling.sampleDown(Process.getModifiedCb(), combobox_sampling.getValue()));
+        Process.setModifiedCr(jpeg.Sampling.sampleDown(Process.getModifiedCr(), combobox_sampling.getValue()));
+    }
+
+    @FXML
+    void oversample(ActionEvent event) {
+        Process.setModifiedCb(jpeg.Sampling.sampleUp(Process.getModifiedCb(), combobox_sampling.getValue()));
+        Process.setModifiedCr(jpeg.Sampling.sampleUp(Process.getModifiedCr(), combobox_sampling.getValue()));
+    }
+
+    @FXML
     void acctionmodred(ActionEvent event) {
         Dialogs.showImageInWindow(Process.getOneColorImageFromRGB(Process.getModifiedRed(), ColorType.RED, button_shadesofgray.isSelected()), "Modified Red Image");
     }
@@ -272,22 +282,12 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    void downsample(ActionEvent event) {
-
-    }
-
-    @FXML
     void iquantize(ActionEvent event) {
 
     }
 
     @FXML
     void itransform(ActionEvent event) {
-
-    }
-
-    @FXML
-    void oversample(ActionEvent event) {
 
     }
 
@@ -337,5 +337,4 @@ public class MainWindowController implements Initializable {
     void slider(ActionEvent event) {
 
     }
-
 }

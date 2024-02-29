@@ -2,6 +2,7 @@ package jpeg;
 
 import Jama.Matrix;
 import enums.ColorType;
+import enums.SamplingType;
 import graphics.Dialogs;
 
 import java.awt.*;
@@ -174,5 +175,13 @@ public class Process {
     }
     public int getImageWidth() {
         return imageWidth;
+    }
+
+    public void setModifiedCb(Matrix modifiedCb) {
+        this.modifiedCb = modifiedCb;
+    }
+
+    public void setModifiedCr(Matrix modifiedCr) {
+        this.modifiedCr = modifiedCr;
     }
 }
