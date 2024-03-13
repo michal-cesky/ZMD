@@ -14,13 +14,19 @@ public class Process {
 
     private BufferedImage originalImage;
 
-    private int [][] originalRed, modifiedRed;
-    private int [][] originalGreen, modifiedGreen;
-    private int [][] originalBlue, modifiedBlue;
+    private static int [][] originalRed;
+    private static int [][] modifiedRed;
+    private static int [][] originalGreen;
+    private static int [][] modifiedGreen;
+    private static int [][] originalBlue;
+    private static int [][] modifiedBlue;
 
-    private Matrix originalY, modifiedY;
-    private Matrix originalCb, modifiedCb;
-    private Matrix originalCr, modifiedCr;
+    private static Matrix originalY;
+    private static Matrix modifiedY;
+    private static Matrix originalCb;
+    private static Matrix modifiedCb;
+    private static Matrix originalCr;
+    private static Matrix modifiedCr;
 
     private int imageHeight;
     private int imageWidth;
@@ -134,40 +140,38 @@ public class Process {
     public BufferedImage getOriginalImage() {
         return originalImage;
     }
-    public int[][] getOriginalRed() {
+    public static int[][] getOriginalRed() {
         return originalRed;
     }
-    public int[][] getModifiedRed() {
+    public static int[][] getModifiedRed() {
         return modifiedRed;
     }
-    public int[][] getOriginalGreen() {
+    public static int[][] getOriginalGreen() {
         return originalGreen;
     }
-    public int[][] getModifiedGreen() {
+    public static int[][] getModifiedGreen() {
         return modifiedGreen;
     }
-    public int[][] getOriginalBlue() {
+    public static int[][] getOriginalBlue() {
         return originalBlue;
     }
-    public int[][] getModifiedBlue() {
+    public static int[][] getModifiedBlue() {
         return modifiedBlue;
     }
-    public Matrix getOriginalY() {
-        return originalY;
-    }
-    public Matrix getModifiedY() {
+    public static Matrix getOriginalY() {return originalY; }
+    public static Matrix getModifiedY() {
         return modifiedY;
     }
-    public Matrix getOriginalCb() {
+    public static Matrix getOriginalCb() {
         return originalCb;
     }
-    public Matrix getModifiedCb() {
+    public static Matrix getModifiedCb() {
         return modifiedCb;
     }
-    public Matrix getOriginalCr() {
+    public static Matrix getOriginalCr() {
         return originalCr;
     }
-    public Matrix getModifiedCr() {
+    public static Matrix getModifiedCr() {
         return modifiedCr;
     }
     public int getImageHeight() {

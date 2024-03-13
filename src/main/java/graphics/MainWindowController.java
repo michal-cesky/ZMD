@@ -2,10 +2,7 @@ package graphics;
 
 import core.FileBindings;
 import core.Helper;
-import enums.ColorType;
-import enums.SamplingType;
-import enums.TransformType;
-import javafx.beans.property.Property;
+import enums.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import jpeg.Process;
+import jpeg.Quality;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -23,15 +21,23 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 
+import static enums.PsnrTypeMethod.*;
+import static enums.SsimTypeMtehod.MSSIM;
+import static enums.SsimTypeMtehod.SSIM;
+
 public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         combobox_sampling.getItems().addAll(SamplingType.values());
         combobox_transform.getItems().addAll(TransformType.values());
+        combobox_psnr.getItems().addAll(PsnrType.values());
+        combobox_ssim.getItems().addAll(SsimType.values());
 
         combobox_sampling.getSelectionModel().select(SamplingType.S_4_1_1);
         combobox_transform.getSelectionModel().select(TransformType.DCT);
+        combobox_psnr.getSelectionModel().select(PsnrType.Red);
+        combobox_ssim.getSelectionModel().select(SsimType.Y);
         slider.setValue(50);
 
         ObservableList<Integer> blocks = FXCollections.observableArrayList(2, 4, 8, 16, 32, 64, 128, 256, 512);
@@ -73,12 +79,17 @@ public class MainWindowController implements Initializable {
     }
 
 
-
     @FXML
     private ComboBox<SamplingType> combobox_sampling;
 
     @FXML
+    private ComboBox<PsnrType> combobox_psnr;
+
+    @FXML
     private ComboBox<TransformType> combobox_transform;
+
+    @FXML
+    private ComboBox<SsimType> combobox_ssim;
 
     @FXML
     private Button button_cb;
@@ -99,7 +110,19 @@ public class MainWindowController implements Initializable {
     private TextField textfield_mse;
 
     @FXML
+    private TextField textfield_mae;
+
+    @FXML
     private TextField textfield_psnr;
+
+    @FXML
+    private TextField textfield_ssim;
+
+    @FXML
+    private TextField textfield_mssim;
+
+    @FXML
+    private TextField textfield_sae;
 
     @FXML
     private Button button_downsample;
@@ -118,9 +141,6 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private Button button_mored;
-
-    @FXML
-    private Button button_morgb;
 
     @FXML
     private Button button_moy;
@@ -168,7 +188,11 @@ public class MainWindowController implements Initializable {
     private Button button_orgreen;
 
     @FXML
-    private Button button_blue;
+    private Button button_countssin;
+
+
+
+
 
     private Process Process;
 
@@ -237,6 +261,20 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
+    void count(ActionEvent event) {
+        textfield_mse.setText(String.valueOf(Quality.Quality_1(combobox_psnr.getValue(),MSE)));
+        textfield_mae.setText(String.valueOf(Quality.Quality_1(combobox_psnr.getValue(),MAE)));
+        textfield_psnr.setText(String.valueOf(Quality.Quality_1(combobox_psnr.getValue(),PSNR)));
+        textfield_sae.setText(String.valueOf(Quality.Quality_1(combobox_psnr.getValue(),SAE)));
+    }
+
+    @FXML
+    void countssin(ActionEvent event) {
+        textfield_ssim.setText(String.valueOf(Quality.Quality_2(combobox_ssim.getValue(), SSIM)));
+        textfield_mssim.setText(String.valueOf(Quality.Quality_2(combobox_ssim.getValue(), MSSIM)));
+    }
+
+    @FXML
     void acctionmodred(ActionEvent event) {
         Dialogs.showImageInWindow(Process.getOneColorImageFromRGB(Process.getModifiedRed(), ColorType.RED, button_shadesofgray.isSelected()), "Modified Red Image");
     }
@@ -272,7 +310,7 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    void count(ActionEvent event) {
+    void textssim(ActionEvent event){
 
     }
 
@@ -297,10 +335,14 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    void sampling(ActionEvent event) {
+    void psnrType(ActionEvent event) {
 
     }
 
+    @FXML
+    void sampling(ActionEvent event) {
+
+    }
 
     @FXML
     void showsteps(ActionEvent event) {
@@ -308,10 +350,19 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    void transform(ActionEvent event) {
+    void combssim(ActionEvent event) {
 
     }
 
+    @FXML
+    void combpsnr(ActionEvent event) {
+
+    }
+
+    @FXML
+    void transform(ActionEvent event) {
+
+    }
 
     @FXML
     void fieldencode(ActionEvent event) {
@@ -325,6 +376,15 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void psnr(ActionEvent event) {
+
+    }
+
+    @FXML
+    void mae(ActionEvent event) {
+
+    }
+    @FXML
+    void sae(ActionEvent event) {
 
     }
 
