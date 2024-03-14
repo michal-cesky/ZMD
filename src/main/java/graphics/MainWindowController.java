@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import jpeg.Process;
 import jpeg.Quality;
+import jpeg.Transform;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -255,6 +256,20 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
+    void transform(ActionEvent event) {
+        jpeg.Process.setModifiedY(Transform.transform(jpeg.Process.getModifiedY(), combobox_transform.getValue(), spinner_encode.getValue()));
+        jpeg.Process.setModifiedCb(Transform.transform(jpeg.Process.getModifiedCb(), combobox_transform.getValue(), spinner_encode.getValue()));
+        jpeg.Process.setModifiedCr(Transform.transform(jpeg.Process.getModifiedCr(), combobox_transform.getValue(), spinner_encode.getValue()));
+    }
+
+    @FXML
+    void itransform(ActionEvent event) {
+        jpeg.Process.setModifiedY(Transform.inverseTransform(jpeg.Process.getModifiedY(), combobox_transform.getValue(), spinner_encode.getValue()));
+        jpeg.Process.setModifiedCb(Transform.inverseTransform(jpeg.Process.getModifiedCb(), combobox_transform.getValue(), spinner_encode.getValue()));
+        jpeg.Process.setModifiedCr(Transform.inverseTransform(jpeg.Process.getModifiedCr(), combobox_transform.getValue(), spinner_encode.getValue()));
+    }
+
+    @FXML
     void oversample(ActionEvent event) {
         Process.setModifiedCb(jpeg.Sampling.sampleUp(Process.getModifiedCb(), combobox_sampling.getValue()));
         Process.setModifiedCr(jpeg.Sampling.sampleUp(Process.getModifiedCr(), combobox_sampling.getValue()));
@@ -325,11 +340,6 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    void itransform(ActionEvent event) {
-
-    }
-
-    @FXML
     void quantize(ActionEvent event) {
 
     }
@@ -356,11 +366,6 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void combpsnr(ActionEvent event) {
-
-    }
-
-    @FXML
-    void transform(ActionEvent event) {
 
     }
 

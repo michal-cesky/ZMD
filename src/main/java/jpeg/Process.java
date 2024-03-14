@@ -181,11 +181,15 @@ public class Process {
         return imageWidth;
     }
 
-    public void setModifiedCb(Matrix modifiedCb) {
-        this.modifiedCb = modifiedCb;
+    public static void setModifiedY(Matrix modifiedY) {
+        Process.modifiedY = modifiedY;
     }
 
-    public void setModifiedCr(Matrix modifiedCr) {
-        this.modifiedCr = modifiedCr;
+    public static void setModifiedCb(Matrix modifiedCb) {
+        Process.modifiedCb = modifiedCb;
+    }
+
+    public static void setModifiedCr(Matrix modifiedCr) {
+        Process.modifiedCr = modifiedCr;
     }
 }
