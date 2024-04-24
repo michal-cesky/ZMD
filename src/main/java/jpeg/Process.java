@@ -28,8 +28,8 @@ public class Process {
     private static Matrix originalCr;
     private static Matrix modifiedCr;
 
-    private int imageHeight;
-    private int imageWidth;
+    private static int imageHeight;
+    private static int imageWidth;
 
     public Process(String pathToIImage) {
         init(Dialogs.loadImageFromPath(pathToIImage));
@@ -42,7 +42,7 @@ public class Process {
         imageWidth = originalImage.getWidth();
 
         initMatrix();
-        setOriginalRGB();
+        setOriginalRGB(originalImage);
     }
 
     private void initMatrix() {
@@ -62,10 +62,10 @@ public class Process {
         modifiedCb = new Matrix(imageHeight, imageWidth);
         modifiedCr = new Matrix(imageHeight, imageWidth);
     }
-    private void setOriginalRGB() {
+    public static void setOriginalRGB(BufferedImage x) {
         for (int h = 0; h < imageHeight; h++) {
             for (int w = 0; w < imageWidth; w++) {
-                Color color = new Color(originalImage.getRGB(w, h));
+                Color color = new Color(x.getRGB(w, h));
                 originalRed[h][w] = color.getRed();
                 originalGreen[h][w] = color.getGreen();
                 originalBlue[h][w] = color.getBlue();
@@ -89,7 +89,7 @@ public class Process {
         return bfImage;
     }
 
-    public void convertRGBToYCbCr(){
+    public static void convertRGBToYCbCr(){
         Matrix [] colors = ColorTransform.convertOriginalRGBtoYcBcR(originalRed, originalGreen, originalBlue);
         originalY = colors[0];
         originalCb = colors[1];

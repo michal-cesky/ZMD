@@ -3,7 +3,7 @@ package jpeg;
 import Jama.Matrix;
 import enums.PsnrType;
 import enums.PsnrTypeMethod;
-import enums.SsimType;
+import enums.YCbCrType;
 import enums.SsimTypeMtehod;
 
 import java.util.ArrayList;
@@ -272,8 +272,8 @@ public class Quality {
         return 0;
     }
 
-    public static double Quality_2(SsimType ssimType, SsimTypeMtehod ssimTypeMethod) {
-        switch (ssimType) {
+    public static double Quality_2(YCbCrType YCbCrType, SsimTypeMtehod ssimTypeMethod) {
+        switch (YCbCrType) {
             case Y:
                 switch (ssimTypeMethod){
                     case SSIM:

@@ -1,13 +1,13 @@
 package enums;
 
-public enum SsimType {
+public enum YCbCrType {
     Y("Y"),
     Cb("Cb"),
     Cr("Cr");
 
     String name;
 
-    SsimType(String name) {
+    YCbCrType(String name) {
         this.name = name;
     }
 
